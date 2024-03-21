@@ -10,7 +10,7 @@ def generate_exercises(n, r):  # n为题目数量，r为运算数的范围
         expression = generate_expression(r)
         if is_valid(expression):
             exercises.append(expression)
-            answers.append(calculate(expression))
+            answers.append(eval(expression))
     return exercises, answers
 
 
