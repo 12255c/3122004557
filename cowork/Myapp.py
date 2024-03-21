@@ -38,6 +38,12 @@ def generate_expression(r):
     return expression
 
 
+# 合法性判断
+def is_valid(expression):
+    if eval(expression) < 0:
+        return False
+
+
 parser = argparse.ArgumentParser()
 parser.add_argument('-n', type=int, help='Number of exercises to generate')
 parser.add_argument('-r', type=int, help='Range of numbers in exercises')
