@@ -54,13 +54,13 @@ def save_exercises_and_answers(exercises, answers):
     answers_filename = r"C:\Users\98516\Desktop\3122004557\cowork\answers.txt"
     # 写入题目到Exercises.txt
     with open(exercises_filename, "w") as exercises_file:
-        for exercise in exercises:
-            exercises_file.write(f"{exercise}\n")
+        for i, exercise in enumerate(exercises, start=1):
+            exercises_file.write(f"{i}. {exercise}\n")
 
     # 计算答案并写入到Answers.txt
     with open(answers_filename, "w") as answers_file:
-        for answer in answers:
-            answers_file.write(f"{answer}\n")
+        for i, answer in enumerate(answers, start=1):
+            answers_file.write(f"{i}. {answer}\n")
 
 
 if __name__ == "__main__":
