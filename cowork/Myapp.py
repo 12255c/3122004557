@@ -63,13 +63,52 @@ def save_exercises_and_answers(exercises, answers):
             answers_file.write(f"{i}. {answer}\n")
 
 
+def grade_answers(exercise_file, answer_file):
+    exercises = load_file(exercise_file)
+    answers = load_file(answer_file)
+
+    correct_answers = []
+    wrong_answers = []
+
+    for i in range(len(answers)):
+        if exercises[i].strip() == answers[i].strip():
+            correct_answers.append(i + 1)
+        else:
+            wrong_answers.append(i + 1)
+
+    return correct_answers, wrong_answers
+
+
+def load_file(filename):
+    with open(filename, 'r', encoding='utf-8') as file:
+        return file.readlines()
+
+# 保存得分到文件中
+def save_grade(correct_answers, wrong_answers):
+    grade_filename = r"C:\Users\98516\Desktop\3122004557\cowork\grade.txt"
+    with open(grade_filename, "w") as grade_file:
+        grade_file.write("Correct Answers:\n")
+        for correct in correct_answers:
+            grade_file.write(f"{correct}\n")
+        grade_file.write("\nWrong Answers:\n")
+        for wrong in wrong_answers:
+            grade_file.write(f"{wrong}\n")
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument('-n', type=int, help='Number of exercises to generate', default=10)
     parser.add_argument('-r', type=int, help='Range of numbers in exercises', default=10)
+    parser.add_argument('-e', '--exercisefile', type=str, help='Exercise file path')
+    parser.add_argument('-a', '--answerfile', type=str, help='Answer file path')
     args = parser.parse_args()
 
-    exercises, answers = generate_exercises(args.n, args.r)
-    save_exercises_and_answers(exercises, answers)
+    if args.exercisefile and args.answerfile:
+        correct_answers, wrong_answers = grade_answers(args.exercisefile, args.answerfile)
+        save_grade(correct_answers, wrong_answers)
+    else:
+        exercises, answers = generate_exercises(args.n, args.r)
+        save_exercises_and_answers(exercises, answers)
+
+
 
 
