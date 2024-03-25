@@ -43,12 +43,31 @@ def is_valid(expression):
     if eval(expression) < 0:
         return False
 
+
+# 保存题目和答案到文件中
 def save_exercises_and_answers(exercises, answers, filename="exercises.txt"):
     with open(filename, "w") as file:
         for exercise, answer in zip(exercises, answers):
             file.write(f"{exercise} = {answer}\n")
 
-parser = argparse.ArgumentParser()
-parser.add_argument('-n', type=int, help='Number of exercises to generate')
-parser.add_argument('-r', type=int, help='Range of numbers in exercises')
+# 读取题目和答案文件
+def read_exercises_and_answers(filename=r"D:\exercises.txt"):
+    exercises = []
+    answers = []
+    with open(filename, "r") as file:
+        for line in file:
+            exercise, answer = line.strip().split("=")
+            exercises.append(exercise.strip())
+            answers.append(eval(answer.strip()))
+    return exercises, answers
+
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-n', type=int, help='Number of exercises to generate', default=10)
+    parser.add_argument('-r', type=int, help='Range of numbers in exercises', default=10)
+    args = parser.parse_args()
+
+    exercises, answers = generate_exercises(args.n, args.r)
+    save_exercises_and_answers(exercises, answers)
 
