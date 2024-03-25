@@ -43,7 +43,12 @@ def is_valid(expression):
     if eval(expression) < 0:
         return False
 
+def save_exercises_and_answers(exercises, answers, filename="exercises.txt"):
+    with open(filename, "w") as file:
+        for exercise, answer in zip(exercises, answers):
+            file.write(f"{exercise} = {answer}\n")
 
 parser = argparse.ArgumentParser()
 parser.add_argument('-n', type=int, help='Number of exercises to generate')
 parser.add_argument('-r', type=int, help='Range of numbers in exercises')
+
