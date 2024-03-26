@@ -24,15 +24,6 @@ def generate_expression(r):
     return expression
 
 
-# 生成题目以及答案列表
-"""def generate_exercises(exercises, answers, n, r):
-    while len(exercises) < n:
-        expression = generate_expression(r)
-        if is_valid(expression):
-            exercises.append(expression)
-            answers.append(eval(expression))"""
-
-
 def generate_exercises(exercises, answers, n, r):
     while len(exercises) < n:
         expression = generate_expression(r)
@@ -71,12 +62,21 @@ def save_exercises_and_answers(exercises, answers, script_dir):
 
 # 合法性判断
 def is_valid(expression):
+    valid_operators = {'+', '-', '*', '/'}
+    operator_count = 0
+    for char in expression:
+        if char in valid_operators:
+            operator_count += 1
+            if operator_count > 3:
+                return False
+        elif not char.isdigit():
+            return False
     try:
         if eval(expression) < 0:
             return False
-    except ZeroDivisionError:
+    except (ZeroDivisionError, SyntaxError):
         return False
-    return True
+    return True if operator_count >= 1 else False
 
 
 def grade_answers(exercise_file, answer_file):
