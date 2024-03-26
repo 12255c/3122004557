@@ -101,25 +101,27 @@ def load_file(filename):
 
 
 # 保存得分到文件中
-def save_grade(correct_answers, wrong_answers, directory):
+def save_grade(correct_answers, wrong_answers, script_dir):
     total_correct = len(correct_answers)
     total_wrong = len(wrong_answers)
 
-    with open("grade.txt", "w") as grade_file:
-        grade_file.write(f"Correct: {total_correct}")
+    grade_file_path = os.path.join(script_dir, "grade.txt")
+
+    with open(grade_file_path, "w") as grade_file:
+        grade_file.write(f"Correct: {total_correct}\n")
 
         if total_correct > 0:
             grade_file.write("(")
             for idx, correct in enumerate(correct_answers, start=1):
-                grade_file.write(f"{idx},")
+                grade_file.write(f"{correct},")
             grade_file.write(")\n")
 
-        grade_file.write(f"Wrong: {total_wrong}")
+        grade_file.write(f"Wrong: {total_wrong}\n")
 
         if total_wrong > 0:
             grade_file.write("(")
-            for idx, correct in enumerate(wrong_answers, start=1):
-                grade_file.write(f"{idx},")
+            for idx, wrong in enumerate(wrong_answers, start=1):
+                grade_file.write(f"{wrong},")
             grade_file.write(")\n")
 
 
